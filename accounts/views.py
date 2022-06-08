@@ -15,33 +15,33 @@ from rest_framework import status
 
 
 
-class Register(GenericAPIView):
-    serializer_class = RegisterSerializer
+# class Register(GenericAPIView):
+#     serializer_class = RegisterSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.save()
-            return Response({
-                         "user": UserSerializer(user).data,
-                        "token": AuthToken.objects.create(user)[1]
-                        })
-        else:
-            message = {"error":"Invaid"}
-            return Response(message)
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.get_serializer(data=request.data)
+#         if serializer.is_valid(raise_exception=True):
+#             user = serializer.save()
+#             return Response({
+#                          "user": UserSerializer(user).data,
+#                         "token": AuthToken.objects.create(user)[1]
+#                         })
+#         else:
+#             message = {"error":"Invaid"}
+#             return Response(message)
 
-class Login(LoginView):
-    permission_classes = [permissions.IsAuthenticated]
+# class Login(LoginView):
+#     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            user = serializer.validated_data['user']
-            login(request, user)
-            return super(Login, self).post(request, format=None)
-        else:
-            message = {"error": "try again"}
-            return Response(message)
+#     def post(self, request, format=None):
+#         serializer = AuthTokenSerializer(data=request.data)
+#         if serializer.is_valid(raise_exception=True):
+#             user = serializer.validated_data['user']
+#             login(request, user)
+#             return super(Login, self).post(request, format=None)
+#         else:
+#             message = {"error": "try again"}
+#             return Response(message)
 
 
 class AccountViewSet(ModelViewSet):
